@@ -48,7 +48,7 @@ class CredentialsTab(QWidget):
             return
         row = self._model.get_row(idx)
         menu = QMenu(self)
-        copy_user = QAction(f"Copy Username", self)
+        copy_user = QAction("Copy Username", self)
         copy_user.triggered.connect(lambda: QApplication.clipboard().setText(row.username))
         menu.addAction(copy_user)
         copy_pass = QAction("Copy Password", self)
