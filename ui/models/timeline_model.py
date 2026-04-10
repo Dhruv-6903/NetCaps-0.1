@@ -1,6 +1,6 @@
 """Qt model for Timeline tab."""
 from __future__ import annotations
-from datetime import datetime
+from datetime import datetime, timezone
 from PySide6.QtCore import Qt, QModelIndex
 from PySide6.QtGui import QColor
 
@@ -48,4 +48,4 @@ class TimelineModel(BaseTableModel):
 def _fmt_ts(ts: float) -> str:
     if not ts:
         return ""
-    return datetime.utcfromtimestamp(ts).strftime("%H:%M:%S.%f")[:-3]
+    return datetime.fromtimestamp(ts, tz=timezone.utc).strftime("%H:%M:%S.%f")[:-3]

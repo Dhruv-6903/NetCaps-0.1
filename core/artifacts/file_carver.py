@@ -12,7 +12,8 @@ def carve_file(data: bytes, filename: str, file_type: str, proto: str,
     if not data:
         return None
 
-    md5 = hashlib.md5(data).hexdigest()
+    # MD5 is stored as a forensic identifier only (not for security purposes)
+    md5 = hashlib.md5(data, usedforsecurity=False).hexdigest()
     sha256 = hashlib.sha256(data).hexdigest()
 
     out_dir = Path(cases_dir) / "files"
@@ -21,8 +22,9 @@ def carve_file(data: bytes, filename: str, file_type: str, proto: str,
     # Sanitise filename
     safe_name = "".join(c if c.isalnum() or c in "._- " else "_" for c in filename).strip()
     if not safe_name:
-        safe_name = md5[:16]
-    out_path = out_dir / f"{md5[:8]}_{safe_name}"
+        safe_name = sha256[:16]
+    # Use SHA256 prefix for the filename to avoid ambiguity
+    out_path = out_dir / f"{sha256[:8]}_{safe_name}"
 
     try:
         out_path.write_bytes(data)

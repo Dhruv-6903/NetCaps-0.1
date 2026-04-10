@@ -1,6 +1,6 @@
 """Qt model for Hosts tab."""
 from __future__ import annotations
-from datetime import datetime
+from datetime import datetime, timezone
 from PySide6.QtCore import Qt, QModelIndex
 
 from ui.models.base_model import BaseTableModel
@@ -57,4 +57,4 @@ def _fmt_bytes(b: int) -> str:
 def _fmt_ts(ts: float) -> str:
     if not ts:
         return ""
-    return datetime.utcfromtimestamp(ts).strftime("%H:%M:%S")
+    return datetime.fromtimestamp(ts, tz=timezone.utc).strftime("%H:%M:%S")
