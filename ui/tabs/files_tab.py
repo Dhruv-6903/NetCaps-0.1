@@ -69,11 +69,13 @@ class FilesTab(QWidget):
 
 def _open_folder(path: str) -> None:
     import subprocess
+    import platform
     folder = os.path.dirname(path)
     try:
-        if os.name == "nt":
+        system = platform.system()
+        if system == "Windows":
             os.startfile(folder)
-        elif os.uname().sysname == "Darwin":
+        elif system == "Darwin":
             subprocess.Popen(["open", folder])
         else:
             subprocess.Popen(["xdg-open", folder])

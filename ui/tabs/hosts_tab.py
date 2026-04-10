@@ -51,10 +51,7 @@ class HostsTab(QWidget):
         copy_ip = QAction(f"Copy IP ({row.ip})", self)
         copy_ip.triggered.connect(lambda: QApplication.clipboard().setText(row.ip))
         menu.addAction(copy_ip)
-        filter_ip = QAction("Filter by this IP", self)
-        filter_ip.triggered.connect(
-            lambda: self.parent().parent().set_global_filter(row.ip)
-            if hasattr(self.parent(), "parent") else None
-        )
-        menu.addAction(filter_ip)
+        copy_mac = QAction(f"Copy MAC ({row.mac})", self)
+        copy_mac.triggered.connect(lambda: QApplication.clipboard().setText(row.mac))
+        menu.addAction(copy_mac)
         menu.exec(self._table.viewport().mapToGlobal(pos))

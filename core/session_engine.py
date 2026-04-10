@@ -34,7 +34,15 @@ class SessionEngine:
 
     # ------------------------------------------------------------------
     def process(self, ts: float, raw: bytes, link_type: int = 1) -> list[Session]:
-        """Parse raw packet bytes and update sessions. Returns updated sessions."""
+        """Parse raw packet bytes and update sessions. Returns updated sessions.
+
+        Args:
+            ts: Packet timestamp in seconds since epoch.
+            raw: Raw packet bytes.
+            link_type: PCAP link-layer type. Common values:
+                1  = Ethernet (IEEE 802.3)
+                101 = Raw IP (no link-layer header)
+        """
         updated: list[Session] = []
         try:
             if link_type == 1:

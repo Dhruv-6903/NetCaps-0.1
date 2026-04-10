@@ -85,7 +85,6 @@ _OUI_TABLE: dict[str, str] = {
     "0050F2": "Microsoft (WPS)",
     "ACDE48": "Private",
     "000000": "Xerox",
-    "FFFFFFFFFFFF": "Broadcast",
 }
 
 
@@ -99,6 +98,11 @@ def lookup_vendor(mac: str, db_path: str = "") -> str:
     """Return vendor name for a MAC address."""
     if not mac:
         return "Unknown"
+
+    # Handle broadcast/multicast MACs
+    cleaned = mac.upper().replace(":", "").replace("-", "").replace(".", "")
+    if cleaned == "FFFFFFFFFFFF":
+        return "Broadcast"
 
     prefix = _normalise_mac(mac)
     if not prefix or len(prefix) < 6:

@@ -225,10 +225,6 @@ class ParserThread(QThread):
                 # HTTP
                 if (src_port == 80 or dst_port == 80 or
                         src_port == 8080 or dst_port == 8080) and payload:
-                    session = session_engine.sessions.get(
-                        next((k for k in session_engine.sessions
-                              if src_ip in k and dst_ip in k), ""), None
-                    )
                     creds = http_extractor.extract_credentials(
                         payload, src_ip, dst_ip, ts,
                         f"TCP:{src_ip}:{src_port}:{dst_ip}:{dst_port}"
@@ -273,7 +269,6 @@ class ParserThread(QThread):
 
                 # FTP
                 if src_port == 21 or dst_port == 21:
-                    session = session_engine.sessions
                     sid = f"TCP:{src_ip}:{src_port}:{dst_ip}:{dst_port}"
                     ftp_session = None
                     for k, s in session_engine.sessions.items():
